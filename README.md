@@ -24,8 +24,9 @@ Add these under **Settings → Secrets and variables → Actions → New reposit
 
 Credentials live only in GitHub secrets — never commit them.
 
-The site is uploaded to the server's `public_html/` directory. If your host
-uses a different web root, change `server-dir` in the workflow.
+The site is uploaded to the server's web root (`./`), since the FTP login
+lands there directly. If your host uses a different web root (e.g.
+`public_html/`), change `server-dir` in the workflow.
 
 ### If the connection fails
 

@@ -49,8 +49,9 @@ jobs:
           # Source directory to upload.
           # Plain HTML today -> ./   |   After 11ty migration -> ./_site/
           local-dir: ./
-          # Site web root on the server.
-          server-dir: public_html/
+          # Site web root on the server. The FTP login lands directly in
+          # the web root, so deploy to ./ (not a public_html/ subfolder).
+          server-dir: ./
           # Keep dev files off the live server.
           exclude: |
             **/.git*
