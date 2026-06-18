@@ -241,16 +241,15 @@
       font-family: var(--font-serif);
       font-size: 1rem;
       color: var(--journal-ink);
-      background: transparent;
-      border: 0;
-      border-bottom: 1px solid var(--journal-rule);
+      background: var(--journal-white);
+      border: 1px solid var(--journal-rule);
       border-radius: 0;
       padding: 0.7rem 0.2rem;
       outline: none;
       transition: border-color 0.18s ease;
     }
     .hero-input::placeholder { color: var(--journal-muted); opacity: 0.7; }
-    .hero-input:focus { border-bottom-color: var(--journal-terr); }
+    .hero-input:focus { border-color: var(--journal-terr); }
     .hero-submit {
       flex: 0 0 auto;
       font-family: var(--font-sans);
