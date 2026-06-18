@@ -1,0 +1,9 @@
+# Node / Eleventy (relevant after the future 11ty migration)
+node_modules/
+_site/
+
+# FTP deploy action writes this on the server; never commit it
+.ftp-deploy-sync-state.json
+
+# OS cruft
+.DS_Store

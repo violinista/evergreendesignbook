@@ -1,0 +1,62 @@
+name: Deploy to FTP
+
+# Deploy the site to evergreendesignbook.com on every push to main.
+# Also runnable manually from the Actions tab via "Run workflow".
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never let two deploys run at once — overlapping FTP syncs corrupt the
+# incremental sync state. A newer push cancels an in-progress deploy.
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Sync to FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ----------------------------------------------------------------
+      # 11ty BUILD STEP — currently disabled (site is plain HTML).
+      # When you migrate to Eleventy, uncomment this block AND change
+      # `local-dir` below from `./` to `./_site/`. Those are the only
+      # two edits needed to switch this pipeline to 11ty.
+      # ----------------------------------------------------------------
+      # - name: Set up Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: npm
+      # - name: Install dependencies
+      #   run: npm ci
+      # - name: Build site
+      #   run: npx @11ty/eleventy
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # FTPS = encrypted. If the host doesn't support it and the
+          # connection fails, change this to: ftp
+          protocol: ftps
+          # Source directory to upload.
+          # Plain HTML today -> ./   |   After 11ty migration -> ./_site/
+          local-dir: ./
+          # Site web root on the server.
+          server-dir: public_html/
+          # Keep dev files off the live server.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/README*
+            **/*.md
+            **/LICENSE*
+            **/.ftp-deploy-sync-state.json

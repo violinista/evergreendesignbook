@@ -1,0 +1,4 @@
+# TEMPORARY: block all crawlers during pre-launch.
+# Remove or relax these rules (and the <meta name="robots"> tag in index.html) when ready to go public.
+User-agent: *
+Disallow: /
